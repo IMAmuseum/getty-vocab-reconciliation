@@ -13,7 +13,7 @@ Ed Bachta <ebachta@imamuseum.org>
 """
 
 from nltk.corpus.reader.api import CorpusReader
-from nltk.corpus.reader.util import concat
+from nltk.corpus.reader.util import ConcatenatedCorpusView
 from nltk.corpus.reader.xmldocs import XMLCorpusView
 from nltk.data import PathPointer, FileSystemPathPointer, ZipFilePathPointer
 from nltk.util import LazyMap
@@ -73,22 +73,22 @@ class GettyVocabCorpusReader(CorpusReader):
         xpath = 'Vocabulary/Subject/Terms/(Preferred_Term|Non-Preferred_Term)/Term_Text'
         if fileids is None: fileids = self.fileids()
         
-        return LazyMap(self._replace_chars, concat([GettyXMLCorpusView(fileid, xpath, GettyXMLCorpusView.handle_elt_text)
-                                                    for fileid in self.abspaths(fileids)]))
+        return LazyMap(self._replace_chars, ConcatenatedCorpusView([GettyXMLCorpusView(fileid, xpath, GettyXMLCorpusView.handle_elt_text)
+                                                                    for fileid in self.abspaths(fileids)]))
     
     def subjects(self, fileids=None):
         xpath = 'Vocabulary/Subject'
         if fileids is None: fileids = self.fileids()
         
-        return concat([GettyXMLCorpusView(fileid, xpath)
-                       for fileid in self.abspaths(fileids)])
+        return ConcatenatedCorpusView([GettyXMLCorpusView(fileid, xpath)
+                                       for fileid in self.abspaths(fileids)])
     
     def terms(self, fileids=None):
         xpath = 'Vocabulary/Subject/Terms/(Preferred_Term|Non-Preferred_Term)'
         if fileids is None: fileids = self.fileids()
         
-        return concat([GettyXMLCorpusView(fileid, xpath)
-                       for fileid in self.abspaths(fileids)])
+        return ConcatenatedCorpusView([GettyXMLCorpusView(fileid, xpath)
+                                       for fileid in self.abspaths(fileids)])
 
     def _parse_char_replacements(self):
         xpath = 'Vocabulary/Character'
