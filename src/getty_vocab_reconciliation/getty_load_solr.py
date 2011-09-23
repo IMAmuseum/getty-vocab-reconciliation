@@ -6,8 +6,8 @@ from getty_vocab_reconciliation.getty import GettyAATCorpusReader,\
     GettyULANCorpusReader, GettyTGNCorpusReader
 import solr
 
-getty_path = 'C:/Users/cmoad/Documents/GettyVocab'
-solr_url = 'http://stanley.imamuseum.org:8080/getty-solr'
+getty_path = '/path/to/getty/xml/files'
+solr_url = 'http://localhost:8080/getty-solr'
 
 def load(vocab_name, corpus_reader, sconn):
     """
