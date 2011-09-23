@@ -42,6 +42,7 @@ def load(vocab_name, corpus_reader, sconn):
             print '  %s: Processed %d' % (vocab_name, idx)
 
     # perform a final commit
+    sconn.add_many(docs)
     sconn.commit()
     print 'Successfully imported %d records from %s' % (idx, vocab_name)
 
