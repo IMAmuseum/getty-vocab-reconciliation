@@ -6,7 +6,7 @@ from getty_vocab_reconciliation.getty import GettyAATCorpusReader,\
     GettyULANCorpusReader, GettyTGNCorpusReader
 import solr
 
-getty_path = '/path/to/getty/xml/files'
+getty_path = '/home/cmoad/GettyVocab'
 solr_url = 'http://localhost:8080/getty-solr'
 
 def load(vocab_name, corpus_reader, sconn):
@@ -39,8 +39,11 @@ def load(vocab_name, corpus_reader, sconn):
             sconn.add_many(docs)
             sconn.commit()
             docs = []
-            
-            print '%s: Processed %d' % (vocab_name, idx)
+            print '  %s: Processed %d' % (vocab_name, idx)
+
+    # perform a final commit
+    sconn.commit()
+    print 'Successfully imported %d records from %s' % (idx, vocab_name)
 
 if __name__ == '__main__':
     # Open a solr connection
